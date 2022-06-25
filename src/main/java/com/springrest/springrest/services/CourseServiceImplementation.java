@@ -1,46 +1,53 @@
 package com.springrest.springrest.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springrest.springrest.dao.CourseDao;
 import com.springrest.springrest.entity.Course;
 
 @Service
 public class CourseServiceImplementation implements CourseService {
 
-    List<Course> list;
+    @Autowired
+    private CourseDao coursedao;
 
     CourseServiceImplementation() {
-        list = new ArrayList<>();
-        list.add(new Course(1, "java", "this is java"));
-        list.add(new Course(1, "java", "this is java"));
-        list.add(new Course(1, "java", "this is java"));
+
     }
 
     @Override
     public List<Course> getCourses() {
 
-        return list;
+        return coursedao.findAll();
     }
 
     @Override
-    public Course getcourse() {
-        
-        return null;
+    public Course getcourse(int id) {
+        Optional<Course> c = coursedao.findById(id);
+        return c.get();
+
     }
 
     @Override
-    public Course addcourse() {
-       
-        return null;
+    public Course addcourse(Course course) {
+        return coursedao.save(course);
+
     }
 
     @Override
-    public Course updatecourse() {
-        
-        return null;
+    public Course updatecourse(Course course) {
+        coursedao.save(course);
+        return course;
+    }
+
+    @Override
+    public void deletecourse(int id) {
+        Optional<Course> c = coursedao.findById(id);
+        coursedao.delete(c.get());
     }
 
 }

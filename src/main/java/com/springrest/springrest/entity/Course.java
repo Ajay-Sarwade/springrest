@@ -1,9 +1,20 @@
 package com.springrest.springrest.entity;
 
-public class Course {
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Course implements Serializable {
+    @Id
     private int id;
     private String title;
     private String desc;
+
+    public Course() {
+
+    }
 
     public Course(int id, String title, String desc) {
         this.id = id;
